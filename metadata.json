@@ -1,0 +1,6 @@
+{
+  "name": "MAXFMS",
+  "description": "Professional integrated facilities management and commercial cleaning services with crystal-clear results, featuring beautiful designs for homes and businesses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
