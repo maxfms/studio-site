@@ -5,6 +5,7 @@
 
 import { Target, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import cleaningTeamImage from '../assets/images/maxfms_cleaning_team_1781878604617.jpg';
 
 export default function AboutView() {
   return (
@@ -30,7 +31,7 @@ export default function AboutView() {
           <img
             alt="MAXFMS Professional Dedicated Cleaning Team"
             className="w-full h-full object-cover select-none transition-all duration-700 ease-out group-hover:scale-[1.025]"
-            src="/src/assets/images/maxfms_cleaning_team_1781878604617.jpg"
+            src={cleaningTeamImage}
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>

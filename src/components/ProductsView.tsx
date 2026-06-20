@@ -9,6 +9,7 @@ import { Product } from '../types';
 import { Search, SlidersHorizontal, Check, ShoppingBag, Star, Eye } from 'lucide-react';
 import { formatCurrency } from '../utils';
 import ProductDetailView from './ProductDetailView';
+import showroomImage from '../assets/images/maxfms_cleaners_showroom_1781875584826.jpg';
 
 interface ProductsViewProps {
   onAddToCart: (product: Product) => void;
@@ -92,7 +93,7 @@ export default function ProductsView({ onAddToCart }: ProductsViewProps) {
             <img
               alt="MAXFMS Showroom and Product Collection"
               className="object-cover w-full h-full select-none"
-              src="/src/assets/images/maxfms_cleaners_showroom_1781875584826.jpg"
+              src={showroomImage}
               referrerPolicy="no-referrer"
             />
           </div>

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, Send, CheckCircle2, RefreshCw } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, CheckCircle2, RefreshCw, ChevronDown } from 'lucide-react';
 import { Inquiry } from '../types';
 
 interface ContactViewProps {
@@ -23,6 +23,34 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
   // Submit animation state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      question: 'What services does MAXFMS offer?',
+      answer: 'MAXFMS provides comprehensive facility management solutions including residential cleaning, commercial office cleaning, deep cleaning services, and move-in/move-out cleaning. We also offer eco-friendly botanical cleaning products.'
+    },
+    {
+      question: 'How quickly can you respond to service requests?',
+      answer: 'We pride ourselves on fast turnarounds. Most service requests are responded to within 2-4 hours, and we can typically schedule services within 24-48 hours depending on availability.'
+    },
+    {
+      question: 'Are your cleaning products safe and eco-friendly?',
+      answer: 'Yes! All our cleaning products are botanical formulations and non-toxic. We are fully certified by international sanitary councils and carbon offset credits groups, ensuring safe and sustainable practices.'
+    },
+    {
+      question: 'What is your satisfaction guarantee?',
+      answer: 'We offer a 100% satisfaction guarantee. If you\'re not satisfied with our service, notify us within 24 hours and we\'ll return to re-clean at no additional cost.'
+    },
+    {
+      question: 'How do I track my facility management schedule?',
+      answer: 'Use our MAXFMS Mobile App Portal to manage your assets, track schedules, view real-time stats, and communicate with our specialists. The app provides live dashboard updates and seamless booking.'
+    },
+    {
+      question: 'Can I customize a service package for my business?',
+      answer: 'Absolutely! We offer custom packages tailored to your specific facility needs. Contact us with your requirements and our team will create a personalized solution for you.'
+    }
+  ];
 
   useEffect(() => {
     if (preselectedService) {
@@ -275,6 +303,61 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="relative z-10 mt-20 md:mt-32">
+        <div className="text-center mb-12">
+          <h2 className="font-rubik text-3xl md:text-4xl font-bold text-zinc-850 mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="font-nunito text-lg text-zinc-500 max-w-2xl mx-auto">
+            Find answers to common questions about our services, pricing, and facility management solutions.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-white border border-border-soft rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+            >
+              <button
+                onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                className="w-full p-6 text-left flex items-start justify-between gap-4 cursor-pointer outline-none hover:bg-slate-bg/30 transition-colors"
+              >
+                <h3 className="font-rubik text-base font-bold text-zinc-800 flex-1">
+                  {faq.question}
+                </h3>
+                <ChevronDown
+                  className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${
+                    expandedFAQ === index ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+              
+              {expandedFAQ === index && (
+                <div className="px-6 pb-6 border-t border-border-soft pt-4 animate-fade-in">
+                  <p className="font-nunito text-zinc-600 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="font-nunito text-zinc-500 mb-4">
+            Still have questions? Reach out to our support team.
+          </p>
+          <a
+            href="mailto:hello@auraclean.com"
+            className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-hanken font-bold text-sm uppercase tracking-wide hover:bg-primary-container transition-colors"
+          >
+            Contact Support
+          </a>
         </div>
       </div>
     </div>

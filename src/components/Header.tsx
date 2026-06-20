@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
 import { Menu, X, ShoppingCart, User, Check, History, LogOut } from 'lucide-react';
+import logoImage from '../assets/images/mms_logo_1781794241857.jpg';
 
 interface HeaderProps {
   currentPage: PageId;
@@ -55,55 +56,59 @@ export default function Header({
   return (
     <>
       <header className="fixed top-0 w-full z-40 bg-white border-b border-zinc-200 shadow-xs transition-all duration-200 h-20">
-        <div className="flex justify-between items-center px-gutter max-w-container-max mx-auto h-full">
-          <div className="flex items-center gap-10 lg:gap-16">
-            {/* Logo */}
-            <button 
+        <div className="grid grid-cols-3 items-center px-gutter max-w-container-max mx-auto h-full">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-2.5 col-start-1">
+            <button
               onClick={() => handleNav('home')}
               className="flex items-center gap-2.5 active:scale-95 transition-transform cursor-pointer animate-fade-in"
             >
-              <img 
-                src="/src/assets/images/mms_logo_1781794241857.jpg" 
-                alt="MMS - MAX Management Solutions Logo" 
+              <img
+                src={logoImage}
+                alt="MMS - MAX Management Solutions Logo"
                 referrerPolicy="no-referrer"
                 className="h-16 w-16 object-contain rounded-lg"
               />
             </button>
-
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-              {navLinks.map((link) => {
-                const isActive = currentPage === link.id;
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => handleNav(link.id)}
-                    className={`px-4 py-2 rounded-lg font-nunito text-base transition-all duration-200 relative ${
-                      isActive
-                        ? 'text-primary font-bold border-b-2 border-primary rounded-none px-4 py-2.5'
-                        : 'text-zinc-600 hover:text-primary hover:bg-primary/5'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                );
-              })}
-            </nav>
           </div>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-4">
-          </div>
+          {/* Center: Navigation (centered so both sides have equal spacing) */}
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2 justify-center col-start-2">
+            {navLinks.map((link) => {
+              const isActive = currentPage === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNav(link.id)}
+                    className={`px-4 py-2 rounded-lg font-nunito text-base transition-all duration-200 relative whitespace-nowrap ${
+                    isActive
+                      ? 'text-primary font-bold border-b-2 border-primary rounded-none px-4 py-2.5'
+                      : 'text-zinc-600 hover:text-primary hover:bg-primary/5'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </nav>
 
-          {/* Mobile Actions Overlay */}
-          <div className="flex md:hidden items-center gap-3">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-zinc-650 p-2 rounded-md hover:bg-zinc-100 transition-colors"
-              aria-label="Toggle Menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          {/* Right: Actions + Mobile Menu Button */}
+          <div className="flex items-center justify-end col-start-3 gap-4">
+            {/* Desktop actions placeholder (kept for future action icons) */}
+            <div className="hidden md:flex items-center gap-4">
+              {/* place for cart, user, etc. if needed */}
+            </div>
+
+            {/* Mobile Actions Overlay */}
+            <div className="flex md:hidden items-center gap-3">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-zinc-650 p-2 rounded-md hover:bg-zinc-100 transition-colors"
+                aria-label="Toggle Menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -115,7 +120,7 @@ export default function Header({
                 <button
                   key={link.id}
                   onClick={() => handleNav(link.id)}
-                  className={`w-full text-left px-4 py-3 rounded-xl font-nunito text-base transition-colors ${
+                    className={`w-full text-left px-4 py-3 rounded-xl font-nunito text-base transition-colors whitespace-nowrap ${
                     currentPage === link.id
                       ? 'bg-primary/10 text-primary font-bold'
                       : 'text-zinc-600 hover:bg-zinc-50'

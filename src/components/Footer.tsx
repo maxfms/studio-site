@@ -70,14 +70,7 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 Service Areas
               </button>
             </li>
-            <li>
-              <a
-                href="#terms"
-                className="text-zinc-500 hover:text-primary transition-colors cursor-pointer"
-              >
-                Terms of Service
-              </a>
-            </li>
+
           </ul>
         </div>
 
@@ -95,22 +88,8 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 FAQ &amp; Support Ticket
               </button>
             </li>
-            <li>
-              <button
-                onClick={() => handleNav('contact')}
-                className="text-zinc-500 hover:text-primary transition-colors cursor-pointer outline-none"
-              >
-                Request Custom Callback
-              </button>
-            </li>
-            <li>
-              <a
-                href="#careers"
-                className="text-zinc-500 hover:text-primary transition-colors cursor-pointer"
-              >
-                Careers Hub
-              </a>
-            </li>
+
+
           </ul>
         </div>
 
@@ -150,10 +129,14 @@ export default function Footer({ setCurrentPage }: FooterProps) {
 
       <div className="mt-12 pt-8 border-t border-zinc-200 text-center font-nunito text-xs text-zinc-450 max-w-container-max mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
         <span>© 2026 MAXFMS Facility Management Services. All rights reserved.</span>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <a href="#privacy" className="hover:underline text-zinc-400">Privacy Policy</a>
           <span className="text-zinc-300">•</span>
-          <a href="#security" className="hover:underline text-zinc-400">Trust Guarantee Data Protection</a>
+          <a href="#terms" className="hover:underline text-zinc-400">Terms and Conditions</a>
+          <span className="text-zinc-300">•</span>
+          <a href="#security" className="hover:underline text-zinc-400">Data Protection</a>
+          <span className="text-zinc-300">•</span>
+          <a href="#cookies" className="hover:underline text-zinc-400">Cookie Policy</a>
         </div>
       </div>
     </footer>

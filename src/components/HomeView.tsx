@@ -7,6 +7,13 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Smartphone, Sparkles, ArrowUpRight } from 'lucide-react';
 import { PageId } from '../types';
 import { motion } from 'motion/react';
+import heroLemon from '../assets/images/crew_floor_cleaner_lemon_zest_1781794850260.jpg';
+import heroFloral from '../assets/images/crew_floor_cleaner_floral_1781794865806.jpg';
+import heroCrew7 from '../assets/images/crew_7_restroom_cleaner_1781794881618.jpg';
+import heroScrubber from '../assets/images/office_scrubber_service_1781794896690.jpg';
+import heroMopVac from '../assets/images/office_mop_vacuum_service_1781794910108.jpg';
+import heroGlass from '../assets/images/office_glass_squeegee_service_1781794924859.jpg';
+import appPortalPreview from '../assets/images/app_portal_preview_1781793618602.jpg';
 
 interface HomeViewProps {
   onBookNow: () => void;
@@ -15,27 +22,27 @@ interface HomeViewProps {
 
 const heroCards = [
   {
-    image: '/src/assets/images/crew_floor_cleaner_lemon_zest_1781794850260.jpg',
+    image: heroLemon,
     alt: 'Crew Disinfectant Floor Cleaner - Lemon Zest'
   },
   {
-    image: '/src/assets/images/crew_floor_cleaner_floral_1781794865806.jpg',
+    image: heroFloral,
     alt: 'Crew Disinfectant Floor Cleaner - Floral'
   },
   {
-    image: '/src/assets/images/crew_7_restroom_cleaner_1781794881618.jpg',
+    image: heroCrew7,
     alt: 'Diversey Crew 7 Restroom Disinfectant Cleaner - 1L'
   },
   {
-    image: '/src/assets/images/office_scrubber_service_1781794896690.jpg',
+    image: heroScrubber,
     alt: 'Professional Office Floor Scrubber Machine Service'
   },
   {
-    image: '/src/assets/images/office_mop_vacuum_service_1781794910108.jpg',
+    image: heroMopVac,
     alt: 'Professional Office Mop and Floor Deep Cleaning'
   },
   {
-    image: '/src/assets/images/office_glass_squeegee_service_1781794924859.jpg',
+    image: heroGlass,
     alt: 'Professional Glass Partition and Window Squeegee Cleaning Service'
   }
 ];
@@ -300,7 +307,7 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
             className="cursor-pointer overflow-hidden rounded-2xl border border-zinc-200/60 bg-white shadow-xs max-w-[340px] w-full"
           >
             <img 
-              src="/src/assets/images/app_portal_preview_1781793618602.jpg" 
+              src={appPortalPreview} 
               alt="MAXFMS Go App Portal Companion App Preview" 
               referrerPolicy="no-referrer"
               className="w-full h-auto object-cover block"
@@ -333,7 +340,7 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
             className="group relative rounded-xl overflow-hidden h-[300px] shadow-sm hover:shadow-xl transition-shadow cursor-pointer"
           >
             <img 
-              src="/src/assets/images/crew_floor_cleaner_lemon_zest_1781794850260.jpg" 
+              src={heroLemon} 
               alt="Premium Eco-Friendly Cleaning Products and Botanical Formulas"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
@@ -363,7 +370,7 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
             className="group relative rounded-xl overflow-hidden h-[300px] shadow-sm hover:shadow-xl transition-shadow cursor-pointer"
           >
             <img 
-              src="/src/assets/images/office_scrubber_service_1781794896690.jpg" 
+              src={heroScrubber} 
               alt="Professional Residential and Commercial Cleaning Services"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
