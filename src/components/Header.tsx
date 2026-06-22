@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
 import { Menu, X, ShoppingCart, User, Check, History, LogOut } from 'lucide-react';
-import logoImage from '../assets/images/mms_logo_1781794241857.jpg';
+import logoImage from '../assets/images/logo.png';
 
 interface HeaderProps {
   currentPage: PageId;
