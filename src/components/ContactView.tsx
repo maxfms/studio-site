@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Send, CheckCircle2, RefreshCw, ChevronDown } from 'lucide-react';
 import { Inquiry } from '../types';
 
@@ -23,6 +23,7 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
   // Submit animation state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(0);
 
   const faqs = [
@@ -58,14 +59,38 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
     }
   }, [preselectedService]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!firstName || !email || !message) return;
 
     setIsSubmitting(true);
-    
-    // Simulate API delay
-    setTimeout(() => {
+    setSubmitError('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          serviceInterest: service || 'General Information',
+          message,
+        }),
+      });
+
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json()
+        : { success: response.ok };
+
+      if (!response.ok) {
+        throw new Error((result as any)?.error || 'Failed to send inquiry.');
+      }
+
       onAddInquiry({
         firstName,
         lastName,
@@ -74,16 +99,20 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
         message,
         status: 'received',
       });
-      setIsSubmitting(false);
       setSubmitSuccess(true);
-      
-      // Clean inputs
+
       setFirstName('');
       setLastName('');
       setEmail('');
       setService('');
       setMessage('');
-    }, 1500);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Submission failed. Please try again later.';
+      setSubmitError(message);
+      console.error('Contact form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -118,7 +147,7 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
                 <MapPin className="w-5.5 h-5.5 text-primary" />
               </div>
               <div className="space-y-1">
-                <h3 className="font-rubik text-lg font-bold text-zinc-800">Our Office</h3>
+                <h3 className="font-rubik text-lg font-bold text-zinc-800">Main Branch</h3>
                 <p className="font-nunito text-base text-zinc-500 leading-relaxed">
                   100 Crystal Clear Blvd<br />
                   Suite 400<br />
@@ -138,7 +167,7 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
                 <div>
                   <h4 className="font-hanken font-bold text-[11px] text-zinc-400 uppercase tracking-widest mb-0.5">Phone</h4>
                   <a className="font-nunito text-lg text-primary hover:text-primary-container font-bold tracking-tight transition-colors cursor-pointer" href="tel:+18005550199">
-                    +1 (800) 555-0199
+                    +91 99850 71755
                   </a>
                 </div>
               </div>
@@ -152,7 +181,7 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
                 <div>
                   <h4 className="font-hanken font-bold text-[11px] text-zinc-400 uppercase tracking-widest mb-0.5">Email</h4>
                   <a className="font-nunito text-lg text-primary hover:text-primary-container font-bold tracking-tight transition-colors cursor-pointer" href="mailto:hello@auraclean.com">
-                    hello@auraclean.com
+                    maxfmservices@gmail.com
                   </a>
                 </div>
               </div>
@@ -292,9 +321,11 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
                           </>
                         )}
                       </button>
-                      <p className="font-nunito text-zinc-400 text-center mt-4 text-xs">
-                        By submitting, you agree to our <a className="text-primary hover:underline font-semibold" href="#privacy">Privacy Policy</a>.
-                      </p>
+                      {submitError && (
+                        <p className="font-nunito text-red-500 text-center mt-4 text-sm">
+                          {submitError}
+                        </p>
+                      )}
                     </div>
                   </form>
                 </>
@@ -317,14 +348,17 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-start">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white border border-border-soft rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+              className="self-start bg-white border border-border-soft rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
             >
               <button
+                type="button"
                 onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                aria-expanded={expandedFAQ === index ? 'true' : 'false'}
+                aria-controls={`faq-answer-${index}`}
                 className="w-full p-6 text-left flex items-start justify-between gap-4 cursor-pointer outline-none hover:bg-slate-bg/30 transition-colors"
               >
                 <h3 className="font-rubik text-base font-bold text-zinc-800 flex-1">
@@ -336,9 +370,11 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
                   }`}
                 />
               </button>
-              
               {expandedFAQ === index && (
-                <div className="px-6 pb-6 border-t border-border-soft pt-4 animate-fade-in">
+                <div
+                  id={`faq-answer-${index}`}
+                  className="px-6 pb-6 border-t border-border-soft pt-4 animate-fade-in"
+                >
                   <p className="font-nunito text-zinc-600 leading-relaxed">
                     {faq.answer}
                   </p>
@@ -353,7 +389,9 @@ export default function ContactView({ onAddInquiry, preselectedService = '' }: C
             Still have questions? Reach out to our support team.
           </p>
           <a
-            href="mailto:hello@auraclean.com"
+            href="https://wa.me/919985071755"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-hanken font-bold text-sm uppercase tracking-wide hover:bg-primary-container transition-colors"
           >
             Contact Support

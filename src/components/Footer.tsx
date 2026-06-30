@@ -28,6 +28,9 @@ export default function Footer({ setCurrentPage }: FooterProps) {
             MAXFMS
           </button>
           <p className="font-nunito text-sm text-zinc-500 leading-relaxed max-w-xs">
+            Passion of Cleaning.
+          </p>
+          <p className="font-nunito text-sm text-zinc-500 leading-relaxed max-w-xs">
             Bringing the MAXFMS standard of absolute facility care and integrated solutions to your residential and commercial spaces.
           </p>
         </div>
@@ -70,7 +73,14 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 Service Areas
               </button>
             </li>
-
+            <li>
+              <a
+                href="#terms"
+                className="text-zinc-500 hover:text-primary transition-colors"
+              >
+                Terms and Conditions
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -88,8 +98,14 @@ export default function Footer({ setCurrentPage }: FooterProps) {
                 FAQ &amp; Support Ticket
               </button>
             </li>
-
-
+            <li>
+              <a
+                href="#terms"
+                className="text-zinc-500 hover:text-primary transition-colors"
+              >
+                Terms and Conditions
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -101,42 +117,15 @@ export default function Footer({ setCurrentPage }: FooterProps) {
           <p className="font-nunito text-xs text-zinc-450 leading-relaxed">
             Fully certified by international sanitary councils and carbon offset credits groups.
           </p>
-          <div className="flex gap-3">
-            <a
-              href="#social-web"
-              className="w-9 h-9 rounded-full bg-white border border-border-soft flex items-center justify-center text-zinc-400 hover:text-primary hover:border-primary transition-all active:scale-95"
-              aria-label="Web link"
-            >
-              <Globe className="w-4 h-4" />
-            </a>
-            <a
-              href="#social-contact"
-              className="w-9 h-9 rounded-full bg-white border border-border-soft flex items-center justify-center text-zinc-400 hover:text-primary hover:border-primary transition-all active:scale-95"
-              aria-label="Alternate email contact link"
-            >
-              <AtSign className="w-4 h-4" />
-            </a>
-            <a
-              href="#sanitation-standards"
-              className="w-9 h-9 rounded-full bg-white border border-border-soft flex items-center justify-center text-zinc-400 hover:text-primary hover:border-primary transition-all active:scale-95 shadow-inner"
-              title="Standard Certified sanitation"
-            >
-              <ShieldAlert className="w-4 h-4" />
-            </a>
-          </div>
         </div>
       </div>
 
-      <div className="mt-12 pt-8 border-t border-zinc-200 text-center font-nunito text-xs text-zinc-450 max-w-container-max mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="mt-12 pt-8 border-t border-zinc-200 text-center font-nunito text-xs text-zinc-450 max-w-container-max mx-auto px-gutter space-y-3">
         <span>© 2026 MAXFMS Facility Management Services. All rights reserved.</span>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <a href="#privacy" className="hover:underline text-zinc-400">Privacy Policy</a>
-          <span className="text-zinc-300">•</span>
-          <a href="#terms" className="hover:underline text-zinc-400">Terms and Conditions</a>
-          <span className="text-zinc-300">•</span>
-          <a href="#security" className="hover:underline text-zinc-400">Data Protection</a>
-          <span className="text-zinc-300">•</span>
-          <a href="#cookies" className="hover:underline text-zinc-400">Cookie Policy</a>
+        <div className="flex justify-center gap-4">
+          <a href="#terms" className="text-zinc-500 hover:text-primary transition-colors">
+            Terms and Conditions
+          </a>
         </div>
       </div>
     </footer>

@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { servicesList } from '../data';
-import { ServiceOffer } from '../types';
+import { serviceSeoItems } from '../seoData';
 import { CheckCircle2, Calculator, Info, Calendar } from 'lucide-react';
 import { formatCurrency } from '../utils';
 import { motion, AnimatePresence } from 'motion/react';
@@ -28,9 +28,9 @@ export default function ServicesView({ onRequestQuote }: ServicesViewProps) {
     }
   };
 
-  // Price estimations: 1 square foot cost is ₹15 flat
+  // Price estimations: 1 square foot cost is ₹12 flat
   const calculateEstimate = () => {
-    return calcSqFt * 15;
+    return calcSqFt * 12;
   };
 
   const fadeInUp = {
@@ -58,11 +58,12 @@ export default function ServicesView({ onRequestQuote }: ServicesViewProps) {
       className="pt-6 md:pt-12"
     >
       {/* Header Section */}
-      <motion.div variants={fadeInUp} className="text-center mb-16 max-w-2xl mx-auto">
-        <h1 className="font-rubik text-4xl md:text-5xl font-bold text-primary mb-4">Our Services</h1>
+      <motion.div variants={fadeInUp} className="text-center mb-16 max-w-4xl mx-auto">
+        <h1 className="font-rubik text-4xl md:text-5xl font-bold text-primary mb-4">Our Services in Andhra Pradesh and Telangana</h1>
         <p className="font-nunito text-lg md:text-xl text-zinc-500">
           Discover the MAXFMS Standard. We provide premium residential, corporate, and facility-wide solutions tailored to your exacting standards.
         </p>
+        {/* Services summary grid removed per request */}
       </motion.div>
 
       {/* Services List Grid */}
@@ -136,6 +137,8 @@ export default function ServicesView({ onRequestQuote }: ServicesViewProps) {
         })}
       </div>
 
+      {/* FAQ block removed per request */}
+
       {/* Interactive Estimator Tool (Value Add) */}
       <motion.section 
         initial="hidden"
@@ -201,7 +204,6 @@ export default function ServicesView({ onRequestQuote }: ServicesViewProps) {
                   onChange={(e) => setCalcSqFt(parseInt(e.target.value))}
                   className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-zinc-100 accent-primary"
                 />
-                <span className="text-[11px] text-zinc-400 mt-1 block">Specify your home's total area. Rate: ₹15 per sq. ft.</span>
               </div>
             ) : (
               <div>
@@ -220,7 +222,6 @@ export default function ServicesView({ onRequestQuote }: ServicesViewProps) {
                   onChange={(e) => setCalcSqFt(parseInt(e.target.value))}
                   className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-zinc-100 accent-primary"
                 />
-                <span className="text-[11px] text-zinc-400 mt-1 block">Specify professional office, retail, or lobby area. Rate: ₹15 per sq. ft.</span>
               </div>
             )}
           </div>

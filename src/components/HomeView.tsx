@@ -14,6 +14,9 @@ import heroScrubber from '../assets/images/office_scrubber_service_1781794896690
 import heroMopVac from '../assets/images/office_mop_vacuum_service_1781794910108.jpg';
 import heroGlass from '../assets/images/office_glass_squeegee_service_1781794924859.jpg';
 import appPortalPreview from '../assets/images/app_portal_preview_1781793618602.jpg';
+import gmpImg from '../assets/web-files/gmp.webp';
+import isoImg from '../assets/web-files/iso.webp';
+import ohsasImg from '../assets/web-files/ohsas.webp';
 
 interface HomeViewProps {
   onBookNow: () => void;
@@ -95,7 +98,7 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
       className="space-y-16"
     >
       {/* Light Mode Showcase Hero Section */}
-      <section className="relative pt-20 pb-12 md:pt-28 md:pb-20 px-gutter max-w-7xl mx-auto overflow-hidden bg-gradient-to-b from-zinc-50/70 via-white to-white">
+      <section className="relative pt-8 pb-10 md:pt-16 md:pb-16 px-gutter max-w-7xl mx-auto overflow-hidden bg-gradient-to-b from-zinc-50/70 via-white to-white">
         <div className="relative">
           {/* Headline */}
           <motion.div variants={fadeInUp} className="mx-auto max-w-3xl text-center">
@@ -110,7 +113,7 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
           {/* Card rail container */}
           <motion.div 
             variants={scaleIn} 
-            className="mt-12 md:mt-16 max-w-4xl mx-auto relative select-none"
+            className="mt-10 md:mt-14 max-w-4xl mx-auto relative select-none"
           >
             {/* Tag Left (Products) */}
             <motion.div 
@@ -199,12 +202,12 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
           {/* Subcopy / Guarantee Clean Grid */}
           <motion.div 
             variants={fadeInUp} 
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-12 md:mt-16 max-w-5xl mx-auto pt-8 border-t border-zinc-150/60"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-10 md:mt-14 max-w-5xl mx-auto pt-8 border-t border-zinc-150/60"
           >
             {/* Left Column: CTA & Mission */}
             <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-center lg:text-left">
               <p className="text-sm md:text-base text-zinc-500 font-nunito leading-relaxed">
-                Experience the MAXFMS gold standard in facility management. Connect with professional eco-specialists, buy premium botanical formulations, and optimize your environment today.
+                Experience the MMSFMS gold standard in facility management. Connect with professional eco-specialists, buy premium botanical formulations, and optimize your environment today.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -391,6 +394,35 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
               </button>
             </div>
           </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Certifications Section (added per request) */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-60px' }}
+        variants={fadeInUp}
+        className="px-gutter max-w-container-max mx-auto pb-24 text-center"
+      >
+        <h2 className="font-rubik text-3xl md:text-4xl font-bold text-blue-700 mb-6">Certifications & Quality</h2>
+        <p className="font-nunito text-zinc-600 max-w-2xl mx-auto mb-6">MAXFMS follows recognised quality and safety standards. Our certifications show we use approved processes and safe materials.</p>
+
+        <div className="flex items-center justify-center gap-6 flex-wrap">
+          <div className="flex flex-col items-center gap-2">
+            <img src={gmpImg} alt="GMP Certified" className="w-20 h-20 object-contain" />
+            <span className="text-xs font-semibold text-zinc-600">GMP Certified</span>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <img src={isoImg} alt="ISO 9001:2015" className="w-20 h-20 object-contain" />
+            <span className="text-xs font-semibold text-zinc-600">ISO 9001:2015</span>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <img src={ohsasImg} alt="OHSAS 18001" className="w-20 h-20 object-contain" />
+            <span className="text-xs font-semibold text-zinc-600">OHSAS 18001</span>
+          </div>
         </div>
       </motion.section>
     </motion.div>
