@@ -124,6 +124,20 @@ export const servicesList: ServiceOffer[] = [
     estimatedPrice: 4999
   },
   {
+    id: 'srv-deep-cleaning',
+    title: 'Deep Cleaning',
+    description: 'A thorough deep clean for homes and offices — we reach behind appliances, inside cabinets, along skirting, and every corner that regular cleaning misses.',
+    category: 'residential',
+    badge: 'Deep Clean Service',
+    features: [
+      'Kitchen and bathroom deep sanitization',
+      'Detailed skirting, switch and fixture cleaning',
+      'Cabinets, shelves and behind-appliance cleaning'
+    ],
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
+    estimatedPrice: 6999
+  },
+  {
     id: 'srv-commercial',
     title: 'Commercial Cleaning',
     description: 'Maintain an impeccable professional environment. We provide scalable, discreet, and highly efficient cleaning services for offices, lobbies, and commercial facilities, ensuring your business always presents its best face.',

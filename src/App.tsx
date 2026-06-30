@@ -18,6 +18,8 @@ import UserDashboard from './components/UserDashboard';
 import BookingWizard from './components/BookingWizard';
 import CartDrawer from './components/CartDrawer';
 import { motion, AnimatePresence } from 'motion/react';
+import { getPageSeo, buildFaqSchema, buildServiceSchema } from './seoUtils';
+import { buildLocalBusinessSchema } from './seoData';
 
 import {
   getStoredBookings,
@@ -38,6 +40,77 @@ export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [preselectedService, setPreselectedService] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const currentSeo = getPageSeo(currentPage);
+  const currentPath = currentPage === 'home' ? '/' : `/${currentPage}`;
+  const faqSchema = buildFaqSchema([
+    {
+      question: 'Do you provide AC, floor and deep cleaning in Hyderabad and nearby cities?',
+      answer: 'Yes. MAXFMS offers AC cleaning, floor cleaning, deep cleaning, sofa and carpet cleaning, kitchen and bathroom cleaning, tank cleaning and office housekeeping across Andhra Pradesh and Telangana.'
+    },
+    {
+      question: 'Are your cleaning products safe for homes and offices?',
+      answer: 'We focus on safe, practical cleaning solutions and use methods suited to the surface, space and cleaning goal.'
+    },
+    {
+      question: 'Can I book a one-time cleaning service or a regular plan?',
+      answer: 'Yes. You can book a one-time visit or arrange regular service for homes, offices and commercial properties.'
+    }
+  ]);
+  const serviceSchema = buildServiceSchema('Residential and Commercial Cleaning Services', currentPath);
+  const localBusinessSchema = buildLocalBusinessSchema(currentPath);
+
+  useEffect(() => {
+    document.title = currentSeo.title;
+
+    const descriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (descriptionTag) {
+      descriptionTag.setAttribute('content', currentSeo.description);
+    } else {
+      const newTag = document.createElement('meta');
+      newTag.setAttribute('name', 'description');
+      newTag.setAttribute('content', currentSeo.description);
+      document.head.appendChild(newTag);
+    }
+
+    const robotsTag = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (robotsTag) {
+      robotsTag.setAttribute('content', 'index,follow');
+    } else {
+      const newTag = document.createElement('meta');
+      newTag.setAttribute('name', 'robots');
+      newTag.setAttribute('content', 'index,follow');
+      document.head.appendChild(newTag);
+    }
+
+    let canonicalTag = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalTag) {
+      canonicalTag = document.createElement('link');
+      canonicalTag.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalTag);
+    }
+    canonicalTag.setAttribute('href', `${window.location.origin}${currentSeo.canonicalPath}`);
+
+    const schemaIds = ['maxfms-local-business-schema', 'maxfms-faq-schema', 'maxfms-service-schema'];
+    schemaIds.forEach((id) => {
+      const existingScript = document.getElementById(id);
+      if (existingScript) {
+        existingScript.remove();
+      }
+    });
+
+    const addSchema = (id: string, data: unknown) => {
+      const script = document.createElement('script');
+      script.id = id;
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(data);
+      document.head.appendChild(script);
+    };
+
+    addSchema('maxfms-local-business-schema', localBusinessSchema);
+    addSchema('maxfms-faq-schema', faqSchema);
+    addSchema('maxfms-service-schema', serviceSchema);
+  }, [currentSeo.title, currentSeo.description, currentSeo.canonicalPath, faqSchema, localBusinessSchema, serviceSchema]);
 
   // Initialize data on mount
   useEffect(() => {
