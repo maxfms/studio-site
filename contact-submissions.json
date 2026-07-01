@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "Ping",
+    "lastName": "Test",
+    "email": "ping@example.com",
+    "serviceInterest": "Test Service",
+    "message": "Hello from backend debug",
+    "receivedAt": "2026-07-01T12:43:06.232Z"
+  },
+  {
+    "firstName": "Ithish",
+    "lastName": "Jonnes",
+    "email": "ithishjonnes@gmail.com",
+    "serviceInterest": "General Information",
+    "message": "for testing.",
+    "receivedAt": "2026-07-01T12:49:44.850Z"
+  }
+]
