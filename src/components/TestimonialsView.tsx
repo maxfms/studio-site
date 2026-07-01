@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
-import { Sparkles, Star, MessageSquare, CheckCircle2, X, Camera } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Sparkles, Star, MessageSquare, CheckCircle2, X, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface Testimonial {
@@ -91,10 +91,31 @@ const INITIAL_TESTIMONIALS: Testimonial[] = [
 export default function TestimonialsView() {
   const [filter, setFilter] = useState<'all' | 'residential' | 'commercial' | 'deep-clean'>('all');
   const [activeLightbox, setActiveLightbox] = useState<Testimonial | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
 
   const filteredTestimonials = filter === 'all'
     ? INITIAL_TESTIMONIALS
     : INITIAL_TESTIMONIALS.filter((t) => t.category === filter);
+
+  const scrollGallery = (direction: 'left' | 'right') => {
+    if (!galleryRef.current) return;
+    const cardWidth = galleryRef.current.firstElementChild?.clientWidth ?? 0;
+    const gap = 16;
+    const scrollAmount = cardWidth + gap;
+    galleryRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
+  };
+
+  const updateActiveIndex = () => {
+    if (!galleryRef.current) return;
+    const scrollLeft = galleryRef.current.scrollLeft;
+    const width = galleryRef.current.scrollWidth - galleryRef.current.clientWidth;
+    const progress = width ? scrollLeft / width : 0;
+    setActiveIndex(Math.round(progress * (filteredTestimonials.length - 1)));
+  };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -163,7 +184,7 @@ export default function TestimonialsView() {
         })}
       </motion.div>
 
-      {/* Grid of gallery testimonials */}
+      {/* Grid of testimonials */}
       <motion.div 
         layout
         variants={fadeInUp}
@@ -173,54 +194,37 @@ export default function TestimonialsView() {
           {filteredTestimonials.map((item) => (
             <motion.div
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4 }}
               key={item.id}
-              onClick={() => setActiveLightbox(item)}
-              whileHover={{ y: -6, boxShadow: "0 12px 30px rgba(0,0,0,0.06)" }}
-              className="group bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs hover:border-zinc-300 transition-all duration-300 flex flex-col justify-between cursor-pointer"
+              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(0,0,0,0.05)" }}
+              className="group bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs hover:border-zinc-300 transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Visual Header Image representation */}
-              <div className="h-56 bg-zinc-100 overflow-hidden relative">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-zinc-100 shadow-xs flex items-center gap-1 text-[11px] font-bold text-primary uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                  <span>{item.category.replace('-', ' ')}</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                  <span className="text-white text-xs font-semibold flex items-center gap-1.5">
-                    <Camera className="w-4 h-4" />
-                    <span>Click to view detailed transformation</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Testimonial body review contents */}
               <div className="p-6 md:p-8 flex-grow flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  {/* 5 Stars Rating indicators */}
-                  <div className="flex items-center gap-1 text-amber-500">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Star
-                        key={index}
-                        className={`w-4 h-4 ${index < item.rating ? 'fill-current' : 'text-zinc-200'}`}
-                      />
-                    ))}
+                <div className="space-y-5">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-zinc-600">
+                    <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>{item.category.replace('-', ' ')}</span>
                   </div>
 
-                  <blockquote className="text-zinc-600 italic text-sm leading-relaxed relative">
-                    "{item.quote}"
-                  </blockquote>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-1 text-amber-500">
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <Star
+                          key={index}
+                          className={`w-4 h-4 ${index < item.rating ? 'fill-current' : 'text-zinc-200'}`}
+                        />
+                      ))}
+                    </div>
+
+                    <blockquote className="text-zinc-600 italic text-sm leading-relaxed relative">
+                      "{item.quote}"
+                    </blockquote>
+                  </div>
                 </div>
 
-                {/* Coordinator signature */}
                 <div className="pt-4 border-t border-zinc-100 flex justify-between items-center text-xs text-zinc-400">
                   <div>
                     <h4 className="font-bold text-zinc-800 text-sm">{item.name}</h4>
@@ -233,6 +237,83 @@ export default function TestimonialsView() {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Gallery Section */}
+      <motion.section variants={fadeInUp} className="max-w-container-max mx-auto pb-20">
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-600 text-xs font-bold uppercase tracking-wider">
+            <Camera className="w-3.5 h-3.5" />
+            <span>Gallery</span>
+          </div>
+          <h2 className="font-rubik text-3xl md:text-4xl font-bold text-zinc-900 mt-4">See Our Transformations</h2>
+          <p className="text-base text-zinc-500 max-w-2xl mx-auto mt-3">
+            Browse the real spaces behind the stories and discover the details that make each cleanup stand out.
+          </p>
+        </div>
+
+        <div className="relative overflow-hidden rounded-[32px] border border-zinc-200 bg-zinc-950/5 p-4">
+          <div className="relative">
+          <div className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/95 shadow-sm backdrop-blur transition-opacity hover:opacity-100 opacity-90">
+            <button
+              type="button"
+              onClick={() => scrollGallery('left')}
+              className="p-3 text-zinc-700 hover:text-primary focus:outline-none"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/95 shadow-sm backdrop-blur transition-opacity hover:opacity-100 opacity-90">
+            <button
+              type="button"
+              onClick={() => scrollGallery('right')}
+              className="p-3 text-zinc-700 hover:text-primary focus:outline-none"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div
+            ref={galleryRef}
+            className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none"
+            style={{ touchAction: 'pan-x' }}
+            onScroll={updateActiveIndex}
+          >
+            {filteredTestimonials.map((item) => (
+              <div
+                key={`gallery-${item.id}`}
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveLightbox(item)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActiveLightbox(item);
+                  }
+                }}
+                className="snap-start min-w-[80vw] sm:min-w-[45vw] lg:min-w-[33vw] xl:min-w-[28vw] rounded-3xl overflow-hidden border border-zinc-200 bg-white shadow-xs transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
+              >
+                <div className="h-72 bg-zinc-100 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 h-2 rounded-full bg-zinc-200/60 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-primary transition-all duration-300"
+              style={{ width: `${Math.round((activeIndex / Math.max(filteredTestimonials.length - 1, 1)) * 100)}%` }}
+            />
+          </div>
+        </div>
+        </div>
+      </motion.section>
 
       {/* Testimonials Lightbox details modal overlay */}
       <AnimatePresence>

@@ -405,23 +405,23 @@ export default function HomeView({ onBookNow, setCurrentPage }: HomeViewProps) {
         variants={fadeInUp}
         className="px-gutter max-w-container-max mx-auto pb-24 text-center"
       >
-        <h2 className="font-rubik text-3xl md:text-4xl font-bold text-blue-700 mb-6">Certifications & Quality</h2>
-        <p className="font-nunito text-zinc-600 max-w-2xl mx-auto mb-6">MAXFMS follows recognised quality and safety standards. Our certifications show we use approved processes and safe materials.</p>
+        <h2 className="font-rubik text-4xl md:text-5xl font-bold text-blue-700 mb-6">Certifications & Quality</h2>
+        <p className="font-nunito text-lg text-zinc-600 max-w-2xl mx-auto mb-8">MAXFMS follows recognised quality and safety standards. Our certifications show we use approved processes and safe materials.</p>
 
-        <div className="flex items-center justify-center gap-6 flex-wrap">
-          <div className="flex flex-col items-center gap-2">
-            <img src={gmpImg} alt="GMP Certified" className="w-20 h-20 object-contain" />
-            <span className="text-xs font-semibold text-zinc-600">GMP Certified</span>
+        <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
+          <div className="flex flex-col items-center gap-3">
+            <img src={gmpImg} alt="GMP Certified" className="w-28 h-28 md:w-36 md:h-36 object-contain" />
+            <span className="text-sm md:text-base font-semibold text-zinc-600">GMP Certified</span>
           </div>
 
-          <div className="flex flex-col items-center gap-2">
-            <img src={isoImg} alt="ISO 9001:2015" className="w-20 h-20 object-contain" />
-            <span className="text-xs font-semibold text-zinc-600">ISO 9001:2015</span>
+          <div className="flex flex-col items-center gap-3">
+            <img src={isoImg} alt="ISO 9001:2015" className="w-28 h-28 md:w-36 md:h-36 object-contain" />
+            <span className="text-sm md:text-base font-semibold text-zinc-600">ISO 9001:2015</span>
           </div>
 
-          <div className="flex flex-col items-center gap-2">
-            <img src={ohsasImg} alt="OHSAS 18001" className="w-20 h-20 object-contain" />
-            <span className="text-xs font-semibold text-zinc-600">OHSAS 18001</span>
+          <div className="flex flex-col items-center gap-3">
+            <img src={ohsasImg} alt="OHSAS 18001" className="w-28 h-28 md:w-36 md:h-36 object-contain" />
+            <span className="text-sm md:text-base font-semibold text-zinc-600">OHSAS 18001</span>
           </div>
         </div>
       </motion.section>
